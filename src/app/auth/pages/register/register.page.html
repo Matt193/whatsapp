@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Crear Cuenta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm)">
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input type="text" name="firstName" ngModel required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Apellido</ion-label>
+      <ion-input type="text" name="lastName" ngModel required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Correo Electrónico</ion-label>
+      <ion-input type="email" name="email" ngModel required email #emailInput="ngModel"></ion-input>
+    </ion-item>
+    <div *ngIf="emailInput.invalid && emailInput.touched" class="error-message ion-padding-start">
+      <small *ngIf="emailInput.errors?.['required']">El correo es requerido.</small>
+      <small *ngIf="emailInput.errors?.['email']">Ingresa un correo válido.</small>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Teléfono</ion-label>
+      <ion-input type="tel" name="phone" ngModel required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input type="password" name="password_1" ngModel required minlength="6"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Confirmar Contraseña</ion-label>
+      <ion-input type="password" name="password_2" ngModel required></ion-input>
+    </ion-item>
+
+    <div *ngIf="errorMessage" class="error-message ion-padding">
+      {{ errorMessage }}
+    </div>
+
+    <ion-button expand="block" type="submit" [disabled]="registerForm.invalid || isLoading" class="ion-margin-top">
+      <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+      <span *ngIf="!isLoading">Registrar</span>
+    </ion-button>
+  </form>
+
+  <div class="ion-text-center ion-margin-top">
+    <a routerLink="/auth/login">¿Ya tienes una cuenta? Inicia Sesión</a>
+  </div>
+</ion-content>

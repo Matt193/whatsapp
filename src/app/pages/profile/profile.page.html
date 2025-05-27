@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Mi Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="currentUser$ | async as user; else loadingUser">
+    <ion-card *ngIf="user">
+      <ion-card-header>
+        <ion-card-title>{{ user.firstName }} {{ user.lastName }}</ion-card-title>
+        <ion-card-subtitle>{{ user.email }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>Teléfono:</strong> {{ user.phone }}</p>
+        </ion-card-content>
+    </ion-card>
+    <div *ngIf="!user" class="ion-text-center">
+      <p>No se pudieron cargar los datos del usuario.</p>
+    </div>
+  </div>
+
+  <ng-template #loadingUser>
+    <div class="ion-text-center ion-padding">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Cargando perfil...</p>
+    </div>
+  </ng-template>
+
+  <ion-button expand="block" color="danger" (click)="logout()" class="ion-margin-top">
+    Cerrar Sesión
+  </ion-button>
+</ion-content>
